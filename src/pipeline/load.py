@@ -1,5 +1,4 @@
 import os
-import pandas as pd
 
 
 class Printer:
@@ -25,9 +24,7 @@ class Printer:
         self.df.info()
 
         # Print summary statistics for numerical columns
-        numerical_columns = self.df.select_dtypes(
-            include=["int", "float"]
-        ).columns
+        numerical_columns = self.df.select_dtypes(include=["int", "float"]).columns
         numerical_columns = [
             col for col in numerical_columns if not col.endswith("_binary")
         ]
@@ -46,9 +43,7 @@ class Printer:
             print(self.df[numerical_columns].describe())
 
         # Print unique values for categorical columns
-        categorical_columns = self.df.select_dtypes(
-            include=["category"]
-        ).columns
+        categorical_columns = self.df.select_dtypes(include=["category"]).columns
 
         for col in categorical_columns:
             print(f"\nUnique values in {col}:")

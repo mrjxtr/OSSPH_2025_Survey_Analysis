@@ -1,4 +1,5 @@
 import os
+
 import pandas as pd
 
 
@@ -9,7 +10,6 @@ class Extractor:
 
     def extract(self):
         """Extract data from the Excel file."""
-        # Set the file path
         self._set_file_path()
 
         # Read the Excel file
@@ -38,7 +38,7 @@ class Extractor:
             print(f"Number of rows: {len(self.df)}")
         except FileNotFoundError:
             print(f"Error: File not found at {self.file_path}")
-            self.df = pd.DataFrame()  # Create empty DataFrame
+            self.df = pd.DataFrame()
         except Exception as e:
             print(f"Error loading file: {str(e)}")
-            self.df = pd.DataFrame()  # Create empty DataFrame
+            self.df = pd.DataFrame()

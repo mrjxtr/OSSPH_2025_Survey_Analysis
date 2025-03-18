@@ -74,9 +74,11 @@ class Cleaner:
             self.df["event_participation_binary"] = (
                 self.df["event_participation"]
                 .apply(
-                    lambda x: 1
-                    if str(x).strip() == "Yes"
-                    else (0.5 if str(x).strip() == "Sometimes" else 0)
+                    lambda x: (
+                        1
+                        if str(x).strip() == "Yes"
+                        else (0.5 if str(x).strip() == "Sometimes" else 0)
+                    )
                 )
                 .astype(float)
             )

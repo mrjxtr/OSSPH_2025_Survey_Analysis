@@ -3,6 +3,11 @@ import os
 import matplotlib
 import nltk
 
+from pipeline.clean import Cleaner
+from pipeline.extract import Extractor
+from pipeline.load import Printer
+from plots.plots import *
+
 # Set the backend to 'Agg' to prevent windows from popping up
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -10,29 +15,14 @@ import matplotlib.pyplot as plt
 # Configure matplotlib to avoid warnings about too many open figures
 matplotlib.rcParams["figure.max_open_warning"] = 50
 
-from pipeline.clean import Cleaner
-from pipeline.extract import Extractor
-from pipeline.load import Printer
-from plots.plots import (
-    generate_wordcloud,
-    plot_categorical_distribution,
-    plot_channel_preferences,
-    plot_participation_vs_satisfaction,
-    plot_polarity_distribution,
-    plot_satisfaction_vs_sentiment,
-    plot_score_histograms,
-    plot_sentiment_by_category,
-    plot_sentiment_distribution,
-)
 
-
-def download_nltk_resources():
+def download_nltk_resources() -> None:
     """Download required NLTK resources."""
     nltk.download("stopwords")
     nltk.download("punkt")
 
 
-def generate_plots(df):
+def generate_plots(df) -> None:
     """Generate all plots for the analysis."""
     # Define categorical columns
     categorical_columns = [

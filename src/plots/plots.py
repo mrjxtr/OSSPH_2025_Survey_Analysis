@@ -3,7 +3,6 @@ import re
 from collections import Counter
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
 from wordcloud import WordCloud
@@ -37,25 +36,21 @@ def plot_categorical_distribution(df, categorical_cols):
 
     for col in categorical_cols:
         try:
-            plt.figure(figsize=(16, 10))  # Increased figure size
+            plt.figure(figsize=(16, 10))
             value_counts = df[col].value_counts().sort_values(ascending=False)
 
             # If there are too many categories, show only top 10
             if len(value_counts) > 10:
                 value_counts = value_counts.head(10)
-                plt.title(
-                    f"Top 10 values in {col}", fontsize=20
-                )  # Larger title
+                plt.title(f"Top 10 values in {col}", fontsize=20)
             else:
-                plt.title(f"Distribution of {col}", fontsize=20)  # Larger title
+                plt.title(f"Distribution of {col}", fontsize=20)
 
             sns.barplot(x=value_counts.index, y=value_counts.values)
-            plt.xticks(
-                rotation=45, ha="right", fontsize=14
-            )  # Larger tick labels
-            plt.yticks(fontsize=14)  # Larger tick labels
-            plt.xlabel(col, fontsize=16)  # Larger axis labels
-            plt.ylabel("Count", fontsize=16)  # Larger axis labels
+            plt.xticks(rotation=45, ha="right", fontsize=14)
+            plt.yticks(fontsize=14)
+            plt.xlabel(col, fontsize=16)
+            plt.ylabel("Count", fontsize=16)
             plt.tight_layout()
             plt.savefig(os.path.join(output_dir, f"distribution_{col}.png"))
         except Exception as e:
@@ -73,22 +68,20 @@ def plot_score_histograms(df, score_columns, score_labels):
     for col in score_columns:
         if col in df.columns:
             try:
-                plt.figure(figsize=(16, 10))  # Increased figure size
+                plt.figure(figsize=(16, 10))
 
                 # Create histogram
                 sns.histplot(df[col], kde=True, bins=10)
 
                 plt.title(
                     f"Histogram of {score_labels[col]} Ratings",
-                    fontsize=20,  # Larger title
+                    fontsize=20,
                     fontweight="bold",
                 )
-                plt.xlabel(
-                    f"{score_labels[col]} (1-10 Scale)", fontsize=16
-                )  # Larger axis labels
-                plt.ylabel("Frequency", fontsize=16)  # Larger axis labels
-                plt.xticks(fontsize=14)  # Larger tick labels
-                plt.yticks(fontsize=14)  # Larger tick labels
+                plt.xlabel(f"{score_labels[col]} (1-10 Scale)", fontsize=16)
+                plt.ylabel("Frequency", fontsize=16)
+                plt.xticks(fontsize=14)
+                plt.yticks(fontsize=14)
                 plt.tight_layout()
 
                 plt.savefig(os.path.join(output_dir, f"histogram_of_{col}.png"))
@@ -107,9 +100,9 @@ def plot_sentiment_distribution(df, col):
     sentiment_col = f"{col}_sentiment"
     sentiment_counts = df[sentiment_col].value_counts()
 
-    if not sentiment_counts.empty:  # Only plot if we have sentiment data
+    if not sentiment_counts.empty:
         try:
-            plt.figure(figsize=(16, 10))  # Increased figure size
+            plt.figure(figsize=(16, 10))
 
             # Create bar plot
             sns.barplot(x=sentiment_counts.index, y=sentiment_counts.values)
@@ -117,13 +110,13 @@ def plot_sentiment_distribution(df, col):
             feedback_type = col.replace("_", " ").title()
             plt.title(
                 f"Sentiment Analysis of {feedback_type} Responses",
-                fontsize=20,  # Larger title
+                fontsize=20,
                 fontweight="bold",
             )
-            plt.xlabel("Sentiment Category", fontsize=16)  # Larger axis labels
-            plt.ylabel("Number of Responses", fontsize=16)  # Larger axis labels
-            plt.xticks(fontsize=14)  # Larger tick labels
-            plt.yticks(fontsize=14)  # Larger tick labels
+            plt.xlabel("Sentiment Category", fontsize=16)
+            plt.ylabel("Number of Responses", fontsize=16)
+            plt.xticks(fontsize=14)
+            plt.yticks(fontsize=14)
             plt.tight_layout()
 
             plt.savefig(os.path.join(output_dir, f"sentiment_in_{col}.png"))
@@ -142,17 +135,15 @@ def plot_polarity_distribution(df, col):
     polarity_col = f"{col}_polarity"
 
     try:
-        plt.figure(figsize=(16, 10))  # Increased figure size
+        plt.figure(figsize=(16, 10))
 
-        if df[polarity_col].notna().any():  # Only plot if we have polarity data
+        if df[polarity_col].notna().any():
             sns.histplot(df[polarity_col].dropna(), kde=True)
-            plt.title(
-                f"Polarity Distribution for {col}", fontsize=20
-            )  # Larger title
-            plt.xlabel("Polarity", fontsize=16)  # Larger axis labels
-            plt.ylabel("Frequency", fontsize=16)  # Larger axis labels
-            plt.xticks(fontsize=14)  # Larger tick labels
-            plt.yticks(fontsize=14)  # Larger tick labels
+            plt.title(f"Polarity Distribution for {col}", fontsize=20)
+            plt.xlabel("Polarity", fontsize=16)
+            plt.ylabel("Frequency", fontsize=16)
+            plt.xticks(fontsize=14)
+            plt.yticks(fontsize=14)
             plt.tight_layout()
             plt.savefig(os.path.join(output_dir, f"polarity_{col}.png"))
     except Exception as e:
@@ -172,18 +163,18 @@ def generate_wordcloud(df, col):
             all_text = " ".join([str(text) for text in df[col].dropna()])
 
             wordcloud = WordCloud(
-                width=1600,  # Increased width
-                height=1000,  # Increased height
+                width=1600,
+                height=1000,
                 background_color="white",
-                max_words=150,  # Increased max words
-                min_font_size=10,  # Set minimum font size
-                max_font_size=200,  # Increased maximum font size
+                max_words=150,
+                min_font_size=10,
+                max_font_size=200,
             ).generate(all_text)
 
-            plt.figure(figsize=(20, 12))  # Increased figure size
+            plt.figure(figsize=(20, 12))
             plt.imshow(wordcloud, interpolation="bilinear")
             plt.axis("off")
-            plt.title(f"Word Cloud for {col}", fontsize=24)  # Larger title
+            plt.title(f"Word Cloud for {col}", fontsize=24)
             plt.tight_layout()
             plt.savefig(os.path.join(output_dir, f"wordcloud_{col}.png"))
         except Exception as e:
@@ -195,9 +186,7 @@ def generate_wordcloud(df, col):
 def plot_channel_preferences(df):
     """Analyze and plot channel preferences."""
     base_dir = get_base_dir()
-    output_dir = os.path.join(
-        base_dir, "reports", "figures", "channel_analysis"
-    )
+    output_dir = os.path.join(base_dir, "reports", "figures", "channel_analysis")
     create_directory_if_not_exists(output_dir)
 
     if "useful_channels" in df.columns:
@@ -215,23 +204,19 @@ def plot_channel_preferences(df):
             # Count channel mentions
             channel_counts = Counter(all_channels)
 
-            plt.figure(figsize=(18, 12))  # Increased figure size
+            plt.figure(figsize=(18, 12))
 
             top_channels = dict(channel_counts.most_common(10))
-            sns.barplot(
-                x=list(top_channels.keys()), y=list(top_channels.values())
-            )
+            sns.barplot(x=list(top_channels.keys()), y=list(top_channels.values()))
 
             plt.title(
                 "Top 10 Most Popular Discord Channels",
-                fontsize=24,  # Larger title
+                fontsize=24,
                 fontweight="bold",
             )
-            plt.xlabel("Channel Name", fontsize=18)  # Larger axis labels
-            plt.ylabel("Number of Mentions", fontsize=18)  # Larger axis labels
-            plt.xticks(
-                rotation=45, ha="right", fontsize=16
-            )  # Larger tick labels
+            plt.xlabel("Channel Name", fontsize=18)
+            plt.ylabel("Number of Mentions", fontsize=18)
+            plt.xticks(rotation=45, ha="right", fontsize=16)
             plt.yticks(fontsize=16)  # Larger tick labels
             plt.tight_layout()
 
@@ -245,9 +230,7 @@ def plot_channel_preferences(df):
 def plot_sentiment_by_category(df, text_columns, categorical_columns):
     """Plot sentiment by categorical variables."""
     base_dir = get_base_dir()
-    output_dir = os.path.join(
-        base_dir, "reports", "figures", "sentiment_by_category"
-    )
+    output_dir = os.path.join(base_dir, "reports", "figures", "sentiment_by_category")
     create_directory_if_not_exists(output_dir)
 
     for text_col in text_columns:
@@ -259,15 +242,10 @@ def plot_sentiment_by_category(df, text_columns, categorical_columns):
                     # Create a crosstab
                     cross_data = df[[cat_col, sentiment_col]].dropna()
 
-                    if (
-                        not cross_data.empty
-                        and cross_data[sentiment_col].nunique() > 1
-                    ):
+                    if not cross_data.empty and cross_data[sentiment_col].nunique() > 1:
                         try:
                             # Create figure with normal layout
-                            plt.figure(
-                                figsize=(18, 12)
-                            )  # Increased figure size
+                            plt.figure(figsize=(18, 12))
 
                             # Create a crosstab of sentiment vs category
                             cross_tab = pd.crosstab(
@@ -275,9 +253,7 @@ def plot_sentiment_by_category(df, text_columns, categorical_columns):
                                 cross_data[sentiment_col],
                                 normalize="index",
                             )
-                            cross_tab.plot(
-                                kind="bar", stacked=True, colormap="viridis"
-                            )
+                            cross_tab.plot(kind="bar", stacked=True, colormap="viridis")
 
                             # Create more descriptive title and labels
                             feedback_type = text_col.replace("_", " ").title()
@@ -285,24 +261,18 @@ def plot_sentiment_by_category(df, text_columns, categorical_columns):
 
                             plt.title(
                                 f"Sentiment in {feedback_type} by {category_name}",
-                                fontsize=24,  # Larger title
+                                fontsize=24,
                                 fontweight="bold",
                             )
-                            plt.xlabel(
-                                f"{category_name}", fontsize=18
-                            )  # Larger axis labels
-                            plt.ylabel(
-                                "Proportion of Responses", fontsize=18
-                            )  # Larger axis labels
+                            plt.xlabel(f"{category_name}", fontsize=18)
+                            plt.ylabel("Proportion of Responses", fontsize=18)
                             plt.legend(
                                 title="Sentiment Type",
                                 fontsize=16,
                                 title_fontsize=18,
-                            )  # Larger legend
-                            plt.xticks(
-                                rotation=45, ha="right", fontsize=16
-                            )  # Larger tick labels
-                            plt.yticks(fontsize=16)  # Larger tick labels
+                            )
+                            plt.xticks(rotation=45, ha="right", fontsize=16)
+                            plt.yticks(fontsize=16)
                             plt.tight_layout()
 
                             plt.savefig(
@@ -336,14 +306,14 @@ def plot_satisfaction_vs_sentiment(df, text_columns):
 
             if not scatter_data.empty:
                 try:
-                    plt.figure(figsize=(16, 12))  # Increased figure size
+                    plt.figure(figsize=(16, 12))
 
                     # Create scatter plot with larger markers
                     sns.scatterplot(
                         x="satisfaction_score",
                         y=polarity_col,
                         data=scatter_data,
-                        s=150,  # Larger point size
+                        s=150,
                     )
 
                     # Add regression line
@@ -352,7 +322,7 @@ def plot_satisfaction_vs_sentiment(df, text_columns):
                         y=polarity_col,
                         data=scatter_data,
                         scatter=False,
-                        line_kws={"color": "red", "lw": 3},  # Thicker line
+                        line_kws={"color": "red", "lw": 3},
                     )
 
                     # Create more descriptive title and labels
@@ -360,18 +330,16 @@ def plot_satisfaction_vs_sentiment(df, text_columns):
 
                     plt.title(
                         f"Relationship: Overall Satisfaction vs. {feedback_type} Sentiment",
-                        fontsize=24,  # Larger title
+                        fontsize=24,
                         fontweight="bold",
                     )
-                    plt.xlabel(
-                        "Overall Satisfaction Score (1-10)", fontsize=18
-                    )  # Larger axis labels
+                    plt.xlabel("Overall Satisfaction Score (1-10)", fontsize=18)
                     plt.ylabel(
                         f"Sentiment Polarity in {feedback_type}",
-                        fontsize=18,  # Larger axis labels
+                        fontsize=18,
                     )
-                    plt.xticks(fontsize=16)  # Larger tick labels
-                    plt.yticks(fontsize=16)  # Larger tick labels
+                    plt.xticks(fontsize=16)
+                    plt.yticks(fontsize=16)
                     plt.tight_layout()
 
                     plt.savefig(
@@ -396,43 +364,32 @@ def plot_participation_vs_satisfaction(df):
     )
     create_directory_if_not_exists(output_dir)
 
-    if (
-        "participation_frequency" in df.columns
-        and "satisfaction_score" in df.columns
-    ):
+    if "participation_frequency" in df.columns and "satisfaction_score" in df.columns:
         try:
-            plt.figure(figsize=(18, 12))  # Increased figure size
+            plt.figure(figsize=(18, 12))
 
             # Create boxplot with larger line width
             sns.boxplot(
                 x="participation_frequency",
                 y="satisfaction_score",
                 data=df,
-                linewidth=2.5,  # Thicker lines
+                linewidth=2.5,
             )
 
             # Create more descriptive title and labels
             plt.title(
                 "How Participation Frequency Affects Overall Satisfaction",
-                fontsize=24,  # Larger title
+                fontsize=24,
                 fontweight="bold",
             )
-            plt.xlabel(
-                "Frequency of Participation", fontsize=18
-            )  # Larger axis labels
-            plt.ylabel(
-                "Satisfaction Score (1-10)", fontsize=18
-            )  # Larger axis labels
-            plt.xticks(
-                rotation=45, ha="right", fontsize=16
-            )  # Larger tick labels
-            plt.yticks(fontsize=16)  # Larger tick labels
+            plt.xlabel("Frequency of Participation", fontsize=18)
+            plt.ylabel("Satisfaction Score (1-10)", fontsize=18)
+            plt.xticks(rotation=45, ha="right", fontsize=16)
+            plt.yticks(fontsize=16)
             plt.tight_layout()
 
             plt.savefig(
-                os.path.join(
-                    output_dir, "participation_frequency_vs_satisfaction.png"
-                )
+                os.path.join(output_dir, "participation_frequency_vs_satisfaction.png")
             )
         except Exception as e:
             print(f"Error plotting participation vs satisfaction: {str(e)}")
