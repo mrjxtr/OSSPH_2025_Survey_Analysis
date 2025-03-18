@@ -1,25 +1,49 @@
 # OSSPH 2025 Discord Server Survey Analysis
 
-This project analyzes survey responses from the OSSPH Discord Server for 2025. It processes the data, performs sentiment analysis, and generates various visualizations to understand user satisfaction, participation patterns, and feedback.
+This project analyzes survey responses from the OSSPH Discord Server for 2025.
+It processes the data, performs sentiment analysis, and generates various visualizations to understand user satisfaction, participation patterns, and feedback.
 
-> This document was automatically generated with AI and may not be 100% accurate. Please check the source code for details.
+> This document was automatically generated with AI and may not be 100% accurate.
+> Please check the source code for details.
 
 ## Project Structure
 
 ```plaintext
 OSSPH_2025_Survey/
-├── reports/
-│   └── figures/           # Generated visualizations and CSV output
-├── src/
-│   ├── data/              # Input data files
-│   ├── EDA/               # Exploratory Data Analysis scripts (meant for testing)
-│   ├── pipeline/          # Data processing pipeline
-│   │   ├── extract.py     # Data extraction module
-│   │   ├── clean.py       # Data cleaning and transformation module
-│   │   └── load.py        # Data output and printing module
-│   ├── plots/             # Visualization modules
-│   │   └── plots.py       # Plot generation functions
-│   └── main.py            # Main execution script
+├── reports                                 # Generated reports and figures
+│   └── figures                                 # Visualizations and processed survey data
+│       ├── channel_analysis/                       # Analysis of activity per channel
+│       ├── distribution/                           # Distribution of survey responses
+│       ├── histogram/                              # Histograms of survey data
+│       ├── participation_vs_satisfaction/          # Correlation between participation and satisfaction
+│       ├── polarity/                               # Polarity analysis results
+│       ├── satisfaction_vs_sentiment/              # Satisfaction vs sentiment analysis
+│       ├── sentiment/                              # Overall sentiment analysis
+│       ├── sentiment_by_category/                  # Sentiment grouped by category
+│       ├── wordcloud/                              # Word cloud visualizations
+│       └── survey_with_sentiment.csv               # Survey data with sentiment analysis results
+├── src                                     # Source code
+│   ├── __init__.py                             # Package init file
+│   ├── main.py                                 # Main script to run analysis
+│   ├── data                                    # Data handling modules
+│   │   └── processed                               # Processed survey data
+│   ├── EDA                                     # Exploratory Data Analysis scripts
+│   │   ├── eda.py                                  # EDA logic
+│   │   └── __init__.py                             # Package init file
+│   ├── pipeline                                # Data processing pipeline
+│   │   ├── clean.py                                # Data cleaning logic
+│   │   ├── extract.py                              # Data extraction logic
+│   │   ├── __init__.py                             # Package init file
+│   │   └── load.py                                 # Data loading logic
+│   └── plots                                   # Plot generation scripts
+│       ├── __init__.py                             # Package init file
+│       └── plots.py                                # Plot creation logic
+├── LICENSE                                 # Project license
+├── notebooks                               # Jupyter notebooks for analysis
+├── pyproject.toml                          # Project dependencies and configuration
+├── README.md                               # Project overview and setup instructions
+├── requirements.txt                        # Python package dependencies
+└── SECURITY.md                             # Security guidelines
 ```
 
 ## Features
@@ -52,7 +76,6 @@ OSSPH_2025_Survey/
 To run the analysis:
 
 ```bash
-cd src
 python main.py
 ```
 
